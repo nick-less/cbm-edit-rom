@@ -129,9 +129,11 @@ CRT_CONFIG_GRAPHICS	!BYTE $34,$2D,$2D,$0F,$28,$11,$23,$27,$00,$07,$00,$00,$10,$0
 ; CUSTOM - You Define It  Refresh: 99
 ;=======================
 ; Refer to CRTC documentation! Incorrect parameters could damage your screen!
-;
-;			REG#:   0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17
-!IF REFRESH=99 {	;      ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==
-CRT_CONFIG_TEXT		!BYTE $3E,$28,$32,$12,$1E,$06,$19,$1C,$00,$07,$00,$00,$10,$00,$00,$00,$00,$00 
-CRT_CONFIG_GRAPHICS	!BYTE $3E,$28,$32,$12,$1E,$06,$19,$1C,$00,$07,$00,$00,$10,$00,$00,$00,$00,$00
+; nicht vergessen display skew R8 bit 4 -> http://www.6502.org/users/andre/hwinfo/crtc/diffs.html
+;			REG#:           0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17
+!IF REFRESH=99 {  	;      ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==
+CRT_CONFIG_TEXT		!BYTE $31,$28,$29,$06,$1b,$01,$19,$1a,$10,$0f,$00,$00,$00,$00,$00,$00,$00,$00 
+CRT_CONFIG_GRAPHICS	!BYTE $31,$28,$29,$06,$1b,$01,$19,$1a,$10,$0f,$00,$00,$00,$00,$00,$00,$00,$00 
+;CRT_CONFIG_TEXT		!BYTE $31,$28,$29,$06,$40,$05,$3C,$3D,$00,$07,$00,$00,$00,$00,$00,$00,$00,$00 
+;CRT_CONFIG_GRAPHICS	!BYTE $31,$28,$29,$06,$40,$05,$3C,$3D,$00,$07,$00,$00,$00,$00,$00,$00,$00,$00 
 }
