@@ -19,6 +19,8 @@ SHOW_BANNER
 		lda #<BANNER_TXT		; pointer to BANNER text string
 		ldy #>BANNER_TXT
 		jsr STROUTZ			; print it
+
+
 		rts
 
 ;-------------- Include the Banner text

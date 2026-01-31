@@ -42,14 +42,19 @@ EDITOR					; ENTRY  JUMP  - DESCRIPTION
 ; Initializes Editor, then sets the screen to TEXT or GRAPHICS mode.
 
 RESET_EDITOR
+
 !IF COLOURPET=1 {
 		JSR ColourPET_Init			; Initialize ColourPET plus Editor
 } ELSE {
+;	!IF CP256=1 {
+;		JMP CP256_Init
+;	} ELSE {
 		JSR INIT_EDITOR				; Initialize the Editor
+;	}
 }
-
 !IF FONTSET=0	{ JSR CRT_SET_TEXT }			; Set Screen to TEXT mode
 !IF FONTSET=1	{ JSR CRT_SET_GRAPHICS }		; Set Screen to GRAPHICS mode
+
 
 		JSR BEEP_BEEP 				; Ring BELL
 		JSR BEEP_BEEP 				; Ring BELL

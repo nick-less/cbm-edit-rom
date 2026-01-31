@@ -92,6 +92,9 @@ DEFAULTBO = 2   ; ColourPET Border colour       0 to 15 RGBI
 BYPASSFG  = 5   ; ColourPET Bypass FG     	0 to 15 RGBI			Colours when AUTOSTART is bypassed.
 BYPASSBG  = 0   ; ColourPET Bypass BG     	0 to 15 RGBI
 
+; CP256
+CP256 = 1
+
 ;-- Set output file and include the main EDITROM.ASM
 
 !TO "binaries/editrom-custom.bin",plain			; Generic output file with no load address

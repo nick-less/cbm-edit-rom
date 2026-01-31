@@ -67,6 +67,12 @@
 		!SOURCE "colourpet40.asm"				; colour subs for CODEBASE 1 and 2
 	}
 
+; CP256
+	!IF CP256>0 {
+		!SOURCE "cp256.asm"					; 
+	}
+
+
 ;---------------------- Additional Features
 
 	!IF KEYSCAN=3		{ !SOURCE "keyboard-tables3.asm" }	; C64 Keyboard Scanning Tables

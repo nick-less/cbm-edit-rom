@@ -107,3 +107,5 @@ CCLS_LOOP
 
 !IF (SS40+COLOURPET)>0 {
                 JMP CURSOR_HOME }                       ; If relocated, jump back
+
+
