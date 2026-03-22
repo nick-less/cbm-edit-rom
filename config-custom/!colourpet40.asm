@@ -28,7 +28,7 @@ CBMROM    = 0   ; For CBM ROM specific code	0=none, 1-10 = CBM ROM #	Normal is 0
 KEYSCAN   = 0   ; Keyboard Scanner		0=Normal,1=Business,2=DIN
 KEYBOARD  = 0	; Keyboard type:		0=N-QWERTY,1=B-QWERTY,2=DIN,3=C64,4=B-SJG,5=N-SJG,6=B-QWERTZ,7=B-AZERTY,8=CBM-II (req hw mod)
 REPEATOPT = 0	; Key Repeat Option		0=No (Always ON), 1=Yes
-FONTSET   = 0	; Initial Screen Font		0=Text/Lower, 1=Upper/Graphics	Generally: 40xx machines=1, 8xxx machines=0
+FONTSET   = 1	; Initial Screen Font		0=Text/Lower, 1=Upper/Graphics	Generally: 40xx machines=1, 8xxx machines=0
 
 ;-- Screen
 REFRESH   = 1	; Screen refresh:		0/2=Euro,1=N.A.,15=PAL,16=NTSC,9/10=9",82=8296,32=32-line,35=35-line,90=90x35,99=Custom
@@ -94,5 +94,5 @@ BYPASSBG  = 0   ; ColourPET Bypass BG     	0 to 15 RGBI
 
 ;-- Set output file and include the main EDITROM.ASM
 
-!TO "binaries/colourpet-test.bin",plain			; Generic output file with no load address
+!TO "binaries/colourpet40.bin",plain			; Generic output file with no load address
 !SOURCE "editrom.asm"					; Do not modify this line!
