@@ -36,6 +36,8 @@ CURSORCOLOUR    = $ED		; Storage for Colour at Cursor position
 !if COLOURVER = 0 { COLOUR_RAM = $8400 }		; 40 Col = $8400-87FF, 80 Col = $8800-8FFF
 !if COLOURVER = 1 { COLOUR_RAM = $8800 }		; 40 Col = $8800-8BFF, 80 Col = $8800-8FFF
 
+!if COLOURVER = 2 { COLOUR_RAM = $9000 }		; cp256
+
 
 ;---------------- Storage (Currently in Screen RAM - To be moved?)
 
@@ -47,7 +49,7 @@ COLOURBG	= COLOURSTOR+3	; Background Colour
 COLOURBORDER	= COLOURSTOR+4	; Border Colour
 COLOURCOUNT	= COLOURSTOR+5	; Count to track colour change codes 	(1=FG,2=BG,3=BORDER)
 
-COLOURREGBG	= COLOURSTOR+6	; Colour Background Register		(dummy location for now)
+COLOURREGBG	= $E850	; Colour Background Register		(dummy location for now)
 COLOURREGBORDER = COLOURSTOR+7	; Colour Border Register		(dummy location for now)
 COLOURREGMODE   = COLOURSTOR+8	; Colour Mode Register 			(For future use)
 

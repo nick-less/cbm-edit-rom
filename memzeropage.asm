@@ -241,6 +241,8 @@ SCN4080BOARD    = $0385		; 40/80 Column Switcher board: 0=No, 1=Installed
 !if COLOURVER = 0 { COLOUR_RAM = $8400 }	; 40 Col = $8400-87FF, 80 Col = $8400-87FF
 !if COLOURVER = 1 { COLOUR_RAM = $8800 }	; 40 Col = $8800-8BFF, 80 Col = $8800-8FFF
 
+!if COLOURVER = 2 { COLOUR_RAM = $9000 }	; cp256
+
 ColourStor = COLOUR_RAM + 25 * COLUMNS	         ; Calculate start of extra colour mem
 
 ;---------------- Zero Page Storage

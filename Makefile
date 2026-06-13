@@ -13,6 +13,8 @@ LBL  := $(patsubst %.asm,build/%.lbl,$(SRC))
 
 all:
 	acme config-custom/\!custom.asm
+	acme config-custom/\!cp256-mono.asm
+	acme config-custom/\!cp256-color.asm
 #all: build $(BINS)
 
 build:
