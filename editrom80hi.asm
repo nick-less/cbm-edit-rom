@@ -56,9 +56,10 @@
 
 	; If SS40 or COLOURPET then CLS routine wont fit
 	!IF (SS40 + COLOURPET) >0 {
-		!SOURCE "editrom80cls.asm"				; Relocate Screen clear
-		!SOURCE "editrom80lm.asm"				; Relocate CURSOR_LM code
-		!SOURCE "editrom80scrollup.asm"				; Relocate scroll up code
+		; FIX ME
+;		!SOURCE "editrom40cls.asm"				; Relocate Screen clear
+;		!SOURCE "editrom80lm.asm"				; Relocate CURSOR_LM code
+;		!SOURCE "editrom80scrollup.asm"				; Relocate scroll up code
 	}
 
 
@@ -67,6 +68,9 @@
 	!IF COLOURPET>0 {
 		!SOURCE "colourpet.asm"					; Common code (Init, PETSCII check, Colour conversion)
 		!SOURCE "colourpet80.asm"				; colour subs for CODEBASE 1 and 2
+	}
+	!if CP256>0 {
+		!SOURCE "cp256-ext.asm"				; i2c routines, etc
 	}
 
 ;---------------------- Additional Features

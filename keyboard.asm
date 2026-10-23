@@ -13,3 +13,4 @@
 !IF KEYSCAN=2 { !source "keyboard-tables2.asm" }	; Extended Keyboard Scanner - Two Tables (Normal and Shifted)
 !IF ((CODEBASE>0) & (KEYSCAN=3)) {
 		!source "keyboard-tables3.asm" }	; C64 keyboard tables (only on newer codebases; put in ext space on codebase 0)
+!IF KEYSCAN=9 { !source "keyboard-tables9.asm" }	; PS2 Keyboard Scanner

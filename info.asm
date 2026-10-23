@@ -33,6 +33,7 @@
 	!IF KEYBOARD= 7 { !PET "b-azerty" }	; AZERTY layout
 	!IF KEYBOARD= 8 { !PET "cbm-ii" }	; CBM-II keyboard (requires hardware mod)
 	!IF KEYBOARD= 9 { !PET "n-sjg2" }	; Modified layout - backarrow replaced with ESC
+	!IF KEYBOARD=10 { !PET "ps2" }		; PS2
 	!IF KEYBOARD=11 { !PET "ted" }		; TED Series (C16,C116,Plus/4 etc)
 
 !PET " screen="

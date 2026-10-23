@@ -85,7 +85,11 @@ CLS_LOOP
 ;[E06B]Added--  Clear all Colour Memory
 
 !IF COLOURPET=1 {
+	!IF CP256=1 {
+				LDA ColourBG
+	} ELSE {
                 LDA ColourV				; Colour Value (FG+BG)
+	}
 CCLS_LOOP
 		STA COLOUR_RAM,X			; LOOP[  Colour RAM page 0
 		STA COLOUR_RAM + $100,X			;        Colour RAM page 1

@@ -1,12 +1,8 @@
 ; PET/CBM EDIT ROM - Configuration File
-; ================   FILENAME: !custom.asm
+; ================   FILENAME: !cp256-ps2.asm
 ;
-; For complete documentation see:  cbmsteve.ca/editrom/index.html
+; Editor Rom for custom build "colourpet 256" using a ps2 keyboard
 ;
-; A Project to create replacement EDIT ROMs for the PET/CBM line of computers.
-; Edit these settings to choose which features are included. You can copy this file with a different name if you want to
-; have multiple setting files or to build standard roms etc to validate source changes, etc...
-; ACME.EXE must be in same folder or in search path!
 ;----------------------------------------------------------------------------------------------------------------------------
 ; To create a binary type the following: ACME {name of this file}
 ; For example: ACME !CUSTOM.ASM
@@ -95,7 +91,8 @@ BYPASSBG  = 0   ; ColourPET Bypass BG     	0 to 15 RGBI
 
 ; CP256
 CP256 = 1
-
+CP_BG  = $07
+CP_BGREG = $FFF1
 ;-- Set output file and include the main EDITROM.ASM
 
 !TO "binaries/editrom-cp256ps2.bin",plain			; Generic output file with no load address

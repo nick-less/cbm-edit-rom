@@ -44,12 +44,9 @@ EDITOR					; ENTRY  JUMP  - DESCRIPTION
 RESET_EDITOR
 
 !IF COLOURPET=1 {
-		JSR ColourPET_Init			; Initialize ColourPET plus Editor
+	JSR ColourPET_Init			; Initialize ColourPET plus Editor
 } ELSE {
-;	!IF CP256=1 {
-;		JMP CP256_Init
-;	} ELSE {
-		JSR INIT_EDITOR				; Initialize the Editor
+	JSR INIT_EDITOR				; Initialize the Editor
 ;	}
 }
 !IF FONTSET=0	{ JSR CRT_SET_TEXT }			; Set Screen to TEXT mode
@@ -936,7 +933,9 @@ ADVANCE_TIMER
 !IF KEYSCAN=2 { !SOURCE "keyscan-din.asm" }		; German DIN Keyboard
 !IF KEYSCAN=3 { !SOURCE "keyscan-c64.asm" }		; C64 Keyboard
 !IF KEYSCAN=4 { !SOURCE "keyscan-cbm2.asm" }		; CBM2 Keyboard (future implementation)
+!IF KEYSCAN=9 { !SOURCE "keyscan-ps2.asm" }		; PS2 over X16smc
 
+!warn "current PC is: ", *
 ;*********************************************************************************************************
 ;** JUMP_TO_TAB  [E588]
 ;*********************************************************************************************************
@@ -1357,6 +1356,7 @@ POWERSOF2       !byte $80,$40,$20,$10,$08,$04,$02,$01	; BIT table
 ;** FILLER
 ;*********************************************************************************************************
 
+;!warn "current PC is: ", *
 !IF NOFILL=0 { !FILL $E800-*,$AA }			; Fill to end of 2K
 
 ;#########################################################################################################

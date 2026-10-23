@@ -67,7 +67,7 @@ SET_REPEAT_MODE
 RESET_EDITOR
 
 !IF COLOURPET>0 {
-		JSR ColourPET_Init			; Initialize ColourPET settings, then INIT_EDITOR
+	JSR ColourPET_Init			; Initialize ColourPET settings, then INIT_EDITOR
 	} ELSE {
 		JSR INIT_EDITOR				; Initialize Editor
 }
@@ -150,7 +150,7 @@ UPDATE_SCREEN_PTR
 ;** Get a KEY from keyboard buffer. Reads a character from 'KEYD' then shifts remaining buffer characters
 ;** If there is NO key it will return $FF.
 ;*********************************************************************************************************
-
+!warn "current PC is: ", *
 	!IF NOFILL=0 { !FILL $e0a7-*,$aa }		; FIXED ENTRY POINT! This must not move!
 
 ;#########################################################################################################
@@ -993,6 +993,7 @@ Be3fe		!IF COLOURPET=0 { JSR ERASE_TO_EOL } 	; Clear the bottom line
 !IF KEYSCAN=2 { !SOURCE "keyscan-din.asm" }		; German DIN Keyboard
 ;!IF KEYSCAN=3 { !SOURCE "keyscan-c64.asm" }		; C64 Keyboard
 ;!IF KEYSCAN=4 { !SOURCE "keyscan-cbm2.asm" }		; CBM2 Keyboard (future implementation)
+!IF KEYSCAN=9 { !SOURCE "keyscan-ps2.asm" }		; PS2 over X16smc
 
 ;*********************************************************************************************************
 ;** JUMP_TO_TAB  [E570]

@@ -91,6 +91,11 @@ ccabort		RTS
 ColourPET_Init
 		JSR INIT_EDITOR					; Do Normal Initialization
 
+!IF CP256=1 {
+		LDA #CP_BG				; Default Foreground ColourCPBG
+		STA CP_BGREG
+	}
+
 !IF COLOURMODE = 1 {						;---- Analog Colour Mode
 		LDA COLOURPAL					; Default Colour Palette# = 0
 		STA ColourPNum					; Palette# for Analog Mode

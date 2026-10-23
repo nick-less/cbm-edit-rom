@@ -1008,19 +1008,22 @@ Be3fe		JSR ERASE_TO_EOL			; Clear the bottom line
 !IF KEYSCAN=1 { !SOURCE "keyscan-b.asm" }		; Business Keyboard
 !IF KEYSCAN=2 { !SOURCE "keyscan-din.asm" }		; German DIN Keyboard
 !IF KEYSCAN=3 { !SOURCE "keyscan-c64.asm" }		; C64 Keyboard  (future implementation)
-!IF KEYSCAN=4 { !SOURCE "keyscan-cbm2.asm" }		; CBM2 Keyboard (future implementation)
+!IF KEYSCAN=4 { !SOURCE "keyscan-cbm2.asm" }	; CBM2 Keyboard (future implementation)
+!IF KEYSCAN=9 { !SOURCE "keyscan-ps2.asm" }		; PS2 over X16smc
 
 ;*********************************************************************************************************
 ;** Filler
 ;*********************************************************************************************************
 
+;!warn "current PC is: ", *
 !FILL $E54E-*,$AA 					; 68 bytes (can we put anything here?)
+;!FILL $E578-*,$AA 					; 68 bytes (can we put anything here?)
 
 ;*********************************************************************************************************
 ;** Select Character Set
 ;*********************************************************************************************************
-
 !SOURCE "extcset.asm"					; Handle CTRL-A and CTRL-B
+
 
 ;*********************************************************************************************************
 ;** JUMP_TO_TAB  [E570]
@@ -1378,7 +1381,7 @@ ModifierKeys	!BYTE $00,$00,$00,$00,$00,$00,$41,$00
 ;*********************************************************************************************************
 ;** Filler [E71A]
 ;*********************************************************************************************************
-
+!warn "current PC is: ", *
 !IF CRUNCH=0 {	!FILL $E721-*, $AA } 					;
 
 ;*********************************************************************************************************
@@ -1410,6 +1413,7 @@ SOUND_TAB	!BYTE $0E,$1E,$3E,$7E,$3E,$1E,$0E	; BELL chime values
 		!IF COLOURPET > 0 {
 			!IF COLOURVER = 0 { !SOURCE "screen-40c!.asm" }		; Colour address table with colour shift compensation
 			!IF COLOURVER = 1 { !SOURCE "screen-40c.asm" }		; Colour address table
+			!IF COLOURVER = 2 { !SOURCE "screen-40c.asm" }		; Colour address table
 		}
 }
 
