@@ -89,6 +89,7 @@ ccabort		RTS
 ; It sets the default foreground, background and border colours.
 
 ColourPET_Init
+		JSR INIT_EDITOR					; Do Normal Initialization
 
 !IF COLOURMODE = 1 {						;---- Analog Colour Mode
 		LDA COLOURPAL					; Default Colour Palette# = 0
@@ -103,7 +104,6 @@ ColourPET_Init
 		JSR ColourPET_SyncPointers
 		LDA #5
 		STA ColourV	;*** DEBUG
-		JSR INIT_EDITOR					; Do Normal Initialization
 
 ;*********************************************************************************************************
 ;** Set Colour
