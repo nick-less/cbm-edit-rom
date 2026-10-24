@@ -4,11 +4,11 @@
 ; These tables are used to calculate the starting address of each line on the screen
 
 CLine_Addr_Lo:
-!for i, 0, 24 {
+!for i, 0, ROWS-1 {
 	!byte <(COLOUR_RAM + (i * COLUMNS))
 }
 
 CLine_Addr_Hi:
-!for i, 0, 24 {
+!for i, 0, ROWS-1 {
 	!byte >(COLOUR_RAM + (i * COLUMNS))
 }

@@ -91,7 +91,10 @@ ccabort		RTS
 ColourPET_Init
 		JSR INIT_EDITOR					; Do Normal Initialization
 
-!IF CP256=1 {
+!IF CP256>0 {
+		!if CP_PS2>0 {
+			jsr kbd_init
+		}
 		LDA #CP_BG				; Default Foreground ColourCPBG
 		STA CP_BGREG
 	}

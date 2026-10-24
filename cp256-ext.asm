@@ -29,6 +29,11 @@ shift_pairs:
 !byte $00          ; end of table
 
 
+kbd_init:
+    jsr I2C_INIT
+   
+    rts
+
 
 
 !macro TSB .adr {
@@ -77,7 +82,6 @@ shift_pairs:
 i2c_read_byte 
        sta i2c_addr
        stx i2c_val
-       sty i2c_opt ; optional second value
 
        jsr I2C_START
        
@@ -105,14 +109,13 @@ i2c_read_byte
        rts
 
 
-I2C_INIT 
+I2C_INIT:
        ; Set up the port bit directions and values.  Leaves power off, clk & data low.
        LDA I2C_PORT
        AND     #$7E
        STA I2C_PORT
        RTS                     ; You might want to leave a delay to let the power die out so devices are really
  
-
 
 I2C_START
           +I2C_DATA_UP
@@ -165,7 +168,6 @@ plus:
        LDA  I2C_TEMP
        RTS
  ;-----------------------
-
 
 
 ; send byte 

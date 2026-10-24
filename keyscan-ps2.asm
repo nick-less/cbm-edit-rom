@@ -133,7 +133,6 @@ process_key_press:
     beq check_alt        ; If CTRL not active (0), jump further
     pla
     and #$1F               ; Make 'A' ($41) a CTRL+A ($01). Filters bits 5-7.
-    brk
     jmp SCAN_NORM2
 
 check_alt:
