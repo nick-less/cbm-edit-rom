@@ -27,6 +27,10 @@ INTFP	= $c4bc	; int Y=LSB, A=MSB -> FAC1
 STRFP	= $c8eb	; string -> fp
 RDINT	= $b8f6	; read basic text -> LINNUM
 
+givayf	= $C4BC	 ;Convert Integer in (AC/YR) to Flpt
+
+ 
+
 ABS	= $cd8e	; FAC1 = ABS(FAC1)
 ADD	= $c9a0	; FAC1 = FAC1 + FAC2
 ATN	= $d32C	; FAC1 = ATN(FAC1)

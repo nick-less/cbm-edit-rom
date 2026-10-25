@@ -1,6 +1,7 @@
 
-I2C_DDR = 0xe842
-I2C_PORT = 0xe840
+I2C_DDR = VIA_DDR_B
+I2C_PORT = VIA_Port_B
+
 
 ; fixme
 i2c_addr = $8FFF
@@ -29,9 +30,21 @@ shift_pairs:
 !byte $00          ; end of table
 
 
+I2C_CMD_GET_VER1  = 0x30
+I2C_CMD_GET_VER2  = 0x31
+I2C_CMD_GET_VER3  = 0x32
+
+
+
 kbd_init:
+    lda #0
+    sta KEYFLAGS
+    sta i2c_addr 
+    sta i2c_val  
+    sta I2C_TEMP 
+    sta CharsInBuffer 
     jsr I2C_INIT
-   
+
     rts
 
 
@@ -82,6 +95,7 @@ kbd_init:
 i2c_read_byte 
        sta i2c_addr
        stx i2c_val
+       jsr I2C_INIT
 
        jsr I2C_START
        
@@ -108,13 +122,16 @@ i2c_read_byte
        pla               
        rts
 
-
 I2C_INIT:
        ; Set up the port bit directions and values.  Leaves power off, clk & data low.
+       LDA I2C_DDR
+       AND #$7E            ; Bit 7 und Bit 0 im DDR auf 0 setzen
+       STA I2C_DDR
+
        LDA I2C_PORT
        AND     #$7E
        STA I2C_PORT
-       RTS                     ; You might want to leave a delay to let the power die out so devices are really
+       RTS       ; You might want to leave a delay to let the power die out so devices are really
  
 
 I2C_START

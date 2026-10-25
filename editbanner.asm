@@ -20,7 +20,6 @@ SHOW_BANNER
 		ldy #>BANNER_TXT
 		jsr STROUTZ			; print it
 
-
 		rts
 
 ;-------------- Include the Banner text

@@ -48,10 +48,10 @@ MOD_SCROLL= $20
 
 modifier_scancodes:
 !byte $2c, $39, $3a, $40, $3c, $3e, 63, 59, 30, $7d
-;     RSh LSh RCt LCt RAl LAl RGu LGu
+;     RSh  LSh  RCt  LCt  RAl  LAl  RGu LGu cps scrl
 modifier_bit_indices:
 !byte MOD_SHIFT,  MOD_SHIFT,  MOD_CTRL,  MOD_CTRL,  MOD_ALT,  MOD_ALT, MOD_GUI,  MOD_GUI, MOD_CAPS, MOD_SCROLL
-MODIFIER_COUNT = 9
+MODIFIER_COUNT = 10
 
 
 
@@ -135,6 +135,14 @@ process_key_press:
     beq check_alt        ; If CTRL not active (0), jump further
     pla
     and #$1F               ; Make 'A' ($41) a CTRL+A ($01). Filters bits 5-7.
+
+    cmp #3
+    beq runstop
+    jmp SCAN_NORM2
+runstop:
+    ldx #$EF
+    stx STKEY
+
     jmp SCAN_NORM2
 
 check_alt:
@@ -187,6 +195,7 @@ loop_pairs:
     bne loop_pairs     
 found_shift:
     lda shift_pairs+1,x ; Load the following shifted character
+
 
 ; key in A
 SCAN_NORM2

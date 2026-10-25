@@ -5,7 +5,6 @@
 
 
 .wait:
-
    	lda KEYFLAGS
     and #MOD_SCROLL
     bne .wait        ; If SCROLL key active, wait
