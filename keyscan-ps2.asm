@@ -34,6 +34,7 @@
 ; In short: The kernel variables are:
 ; Key_Image, KEYFLAGS, RPTFLG, KEYPRESSED, DELAY, KOUNT, CharsInBuffer, KEYD, STKEY
 
+; todo: keyboard leds
 
 I2C_ADDRESS      = $42
 I2C_GET_KEYCODE  = $07
@@ -54,8 +55,6 @@ modifier_bit_indices:
 MODIFIER_COUNT = 10
 
 
-
-
 SCAN_KEYBOARD:
     ; read one keycode from SMC
     lda #I2C_ADDRESS
@@ -65,7 +64,6 @@ SCAN_KEYBOARD:
 
     ; A = 0 means no key available
     beq no_key
-
 
 check_modifier:
     pha                 ; Save the original scan code (with bit 7) on the stack
@@ -78,16 +76,14 @@ loop_mod:
     dex
     bpl loop_mod
 
-
     ; If not found: It's a normal key
     pla                 ; pull scancode
     jmp normal_key      
 
 found_modifier:
     pla ; <- scan code from stack
-
     bmi clear_flag    
-    ; X now holds the table index (0 to 8)
+    ; X now holds the table index (0 to MODIFIER_COUNT-1)
     lda modifier_bit_indices,x
 
 set_flag:
@@ -95,10 +91,8 @@ set_flag:
     cmp #MOD_CAPS            ; Is it CapsLock 
     beq toggle_caps
 
-
     ora KEYFLAGS        ; press: set bit
     sta KEYFLAGS
-
     jmp done
 
 clear_flag:
@@ -119,8 +113,6 @@ normal_key:
     ; key press
     JMP process_key_press
 no_key:
-    rts
-
 key_release:
     rts
 
@@ -136,10 +128,11 @@ process_key_press:
     pla
     and #$1F               ; Make 'A' ($41) a CTRL+A ($01). Filters bits 5-7.
 
-    cmp #3
+    cmp #3 ; make ctrl-c act as run/stop
     beq runstop
     jmp SCAN_NORM2
-runstop:
+runstop: 
+    ; fool the kernal
     ldx #$EF
     stx STKEY
 
@@ -149,7 +142,7 @@ check_alt:
    ; 1. Check ALT
     lda KEYFLAGS
     and #MOD_ALT
-    beq check_shift        ; If CTRL not active (0), jump further
+    beq check_shift        ; If ALT not active (0), jump further
     pla
 
     cmp #'A'
@@ -161,12 +154,9 @@ check_alt:
 out:    
     jmp SCAN_NORM2
 
-
-
 pull_a_done:
     pla 
     jmp SCAN_NORM2
-
 
 check_shift:
     ; 2. Check SHIFT
@@ -196,7 +186,6 @@ loop_pairs:
 found_shift:
     lda shift_pairs+1,x ; Load the following shifted character
 
-
 ; key in A
 SCAN_NORM2
     ldx CharsInBuffer		; No. of Chars. in Keyboard Buffer (Queue)
@@ -208,5 +197,4 @@ SCAN_NORM2
 
 done:
     rts
-
 

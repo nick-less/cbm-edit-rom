@@ -1,6 +1,5 @@
 # ---------------------------------------------------------
-# Makefile für ACME-basierte cbm-edit-rom Builds
-# ersetzt alle build-*.bat Skripte
+# Makefile for acme
 # ---------------------------------------------------------
 
 ACME = acme
@@ -36,12 +35,14 @@ ifneq ($(wildcard $(LOADER)),)
 	@echo "Patching Loader..."
 	dd if=$(LOADER) of=kernel4.bin bs=1 seek=3421 conv=notrunc 
 endif
-
-	
+# create images for flashing
 	cat basic-4.901465-23-20-21.bin binaries/editrom-cp256ps2.bin kernel4.bin >tmp/firmware-b000.bin
 #	cat basic-4.901465-23-20-21.bin binaries/editrom-cp256kbd64.bin kernel4.bin >tmp/firmware-b000.bin
 #	cat tmp/faa tmp/fab tmp/fac binaries/editrom-cp256kbd64.bin tmp/fad >tmp/firmware-b000.bin
 	cat tmp/faa tmp/fab tmp/fac tmp/editor.bin tmp/fad >tmp/firmware-o-b000.bin
+	cat tmp/faa tmp/faa skernal/rom-a000.bin tmp/firmware-b000.bin >32k
+	cat 32k 32k 32k 32k >128k 
+	cat 128k 128k 128k 128k >512k
 
 clean:
 	rm -f tmp/firmware-b000.bin
@@ -53,7 +54,7 @@ clean:
 build:
 	mkdir -p build
 
-# Regel: .asm → .bin + .lbl
+# rule: .asm → .bin + .lbl
 build/%.bin: %.asm
 	$(ACME) $(ACMEFLAGS) -l build/$*.lbl -o $@ $<
 
