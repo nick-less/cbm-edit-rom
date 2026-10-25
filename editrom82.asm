@@ -974,7 +974,11 @@ Be3fe		JSR ERASE_TO_EOL			; Clear the bottom line
 ;** Check Keyboard Scroll Control E40B]
 ;*********************************************************************************************************
 
+!IF CP_PS2>0 {
+!SOURCE "scrollpause-ps2.asm"
+} ELSE {
 !SOURCE "scrollpause-din.asm"
+}
 
 ;*********************************************************************************************************
 ;** Jiffy Clock Timer Correction Patch [E431]

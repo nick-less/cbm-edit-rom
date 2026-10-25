@@ -67,7 +67,9 @@ Be470		EOR #$80				; Flip the reverse bit
 
 ;[E47B]		--------------------------------------- Prep for keyboard scanning
 
-Be474		LDY #0
+Be474
+!IF CP_PS2=0 {	; ps2 keyboard doesnt need this
+		LDY #0
 		LDA PIA1_Port_A 			; Keyboard ROW select - PIA#1, Register 0
 							; Upper bits: IEEE and Cassette
 							; Lower bits: Keyboard ROW select
@@ -76,8 +78,27 @@ Be474		LDY #0
 		STA PIA1_Port_A				; Keyboard ROW select - PIA#1, Register 0				CHIP
 		LDA PIA1_Port_A				; Keyboard ROW select - PIA#1, Register 0				CHIP
 }
+}
 
 ;		--------------------------------------- Check IEEE and Cassette status
+!IF CP256>0 {	; cp256 has not tape ports
+
+		LDA PIA1_Cont_B				; PIA#1 Register 13 (Retrace flag and interrupt)
+		AND #$f7				; Mask off bit 4
+		STA PIA1_Cont_B				; PIA#1 Register 13 (Retrace flag and interrupt)
+		BCC Be49e
+
+		LDA VIA_Port_B			; VIA Register 0 (flags)
+		ORA #16 
+		STA VIA_Port_B			; VIA Register 0 (flags)
+		BNE Be4a7	
+Be49e:
+		LDA VIA_Port_B			; VIA Register 0 (flags)
+		AND #$ef 
+		STA VIA_Port_B			; VIA Register 0 (flags)
+Be4a7:
+} else {
+
 
 		ASL					; Shift upper bits to lower
 		ASL
@@ -98,14 +119,19 @@ Be490		STA PIA1_Cont_B				; PIA#1 Register 13 (Retrace flag and interrupt)
 Be493		BCC Be49e
 
 		STY CAS2				; Tape Motor Interlock #2
+
 		LDA VIA_Port_B				; VIA Register 0 (flags)
 		ORA #16
 		BNE Be4a7
-Be49e		LDA CAS2				; Tape Motor Interlock #2
+Be49e	
+		LDA CAS2				; Tape Motor Interlock #2
 		BNE Be4aa
+
 		LDA VIA_Port_B				; VIA Register 0 (flags)
 		AND #$ef
 Be4a7		STA VIA_Port_B				; VIA Register 0 (flags)
+}
+
 Be4aa
 !IF KEYSCAN=2 {
 		JSR SCAN_KEYBOARD_EXT			; Scan the keyboard in EXT space

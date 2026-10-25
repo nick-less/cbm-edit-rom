@@ -41,6 +41,7 @@ ColourPET_SyncPointersX
 
 ColourPET_SyncPointers
 
+; wtf is this?
 !IF (CODEBASE=0) {
 		LDA CLine_Addr_Hi+1,X			; Screen Line Addresses HI
 		AND #%11110111
@@ -49,11 +50,22 @@ ColourPET_SyncPointers
 }
 		STA SAL+1				; Pointer: Tape Buffer/ Screen Scrolling
 
+		LDA SCNWIDTH				; What is current screen width?
+		CMP #40					; Is it 40?
+		BEQ CSS40_SP40				; Yes, skip down
+
+
 		LDA CLine_Addr_Lo+1,X     		; Screen Line address table LO + 1
 		STA ColourPtr2				; Second Colour RAM Pointer
 		LDA CLine_Addr_Hi+1,X 			; Screen Line address table HI + 1
 		STA ColourPtr2 + 1			;
 		RTS
+CSS40_SP40
+		LDA CLine_Addr_Lo2+1,X			; Screen line address table LO + 1 (40 COL)
+		STA ColourPtr2					; Pointer: Tape Buffer/ Screen Scrolling
+		LDA CLine_Addr_Hi2+1,X			; Screen line address table HI + 1 (40 COL)
+		STA ColourPtr2+1				; Pointer: Tape Buffer/ Screen Scrolling
+		RTS		
 
 ColourPET_SyncPointers2
 		LDA Line_Addr_Lo-1,X			; Screen line address table LO - 1
@@ -117,6 +129,7 @@ CPI1		DEY
 ;*********************************************************************************************************
 
 ColourPET_Scroll_Dest
+
 		LDA (SAL),Y				; Read Character from Screen SOURCE
 		STA (ScrPtr),Y				; Write it to Screen DESTINATION
 		LDA (ColourPtr2),Y			; Read Colour from Colour RAM SOURCE	@@@@@@@@@@@@@@@ COLOURPET

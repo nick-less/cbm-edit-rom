@@ -42,13 +42,15 @@ MOD_SHIFT = $01
 MOD_CTRL  = $02
 MOD_ALT   = $04
 MOD_GUI   = $08
-MOD_CAPS   = $10
+MOD_CAPS  = $10
+MOD_SCROLL= $20
+
 
 modifier_scancodes:
-!byte $2c, $39, $3a, $40, $3c, $3e, 63, 59, 30
+!byte $2c, $39, $3a, $40, $3c, $3e, 63, 59, 30, $7d
 ;     RSh LSh RCt LCt RAl LAl RGu LGu
 modifier_bit_indices:
-!byte MOD_SHIFT,  MOD_SHIFT,  MOD_CTRL,  MOD_CTRL,  MOD_ALT,  MOD_ALT, MOD_GUI,  MOD_GUI, MOD_CAPS
+!byte MOD_SHIFT,  MOD_SHIFT,  MOD_CTRL,  MOD_CTRL,  MOD_ALT,  MOD_ALT, MOD_GUI,  MOD_GUI, MOD_CAPS, MOD_SCROLL
 MODIFIER_COUNT = 9
 
 

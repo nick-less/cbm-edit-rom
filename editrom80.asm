@@ -898,6 +898,12 @@ Be3cb		DEX
 		JSR SS40_SyncPointers2
 	}
 } ELSE {
+		LDA SCNWIDTH
+		cmp #80
+		BEQ .scr80
+		JSR ColourPET_SyncPointers		; Synchronize Pointers	@@@@@@@@@@@@@@@ COLOURPET
+		jmp Be3d8
+.scr80:
 		JSR ColourPET_SyncPointers2 		; Synchronize Pointers	@@@@@@@@@@@@@@@ COLOURPET
 }
 
@@ -937,7 +943,17 @@ Be3e6		INX
 		JSR SS40_SyncPointers
 	}
 } ELSE {
+   	!IF SS40=0 {
+		LDA Line_Addr_Lo+1,X			; Screen line address table LO + 1
+		STA SAL					; Pointer: Tape Buffer/ Screen Scrolling
+		LDA Line_Addr_Hi+1,X			; Screen line address table HI + 1
+		STA SAL+1				; Pointer: Tape Buffer/ Screen Scrolling
 		JSR ColourPET_SyncPointers		; Synchronize Pointers	@@@@@@@@@@@@@@@ COLOURPET
+	} ELSE {
+		JSR SS40_SyncPointers
+		JSR ColourPET_SyncPointers		; Synchronize Pointers	@@@@@@@@@@@@@@@ COLOURPET
+	}
+
 }
 
 Be3f3		INY
@@ -958,7 +974,12 @@ Be3fe		!IF COLOURPET=0 { JSR ERASE_TO_EOL } 	; Clear the bottom line
 ;** Check Keyboard Scroll Control  [E40B]
 ;*********************************************************************************************************
 
+
+!IF CP_PS2>0 {
+!SOURCE "scrollpause-ps2.asm"
+} ELSE {
 !SOURCE "scrollpause-b.asm"
+}
 
 ;*********************************************************************************************************
 ;** Jiffy Clock Timer Correction Patch  [E431]
