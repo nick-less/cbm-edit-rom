@@ -145,6 +145,21 @@ check_alt:
     beq check_shift        ; If ALT not active (0), jump further
     pla
 
+check_alt_table:
+    ldx #$00
+loop_alt_pairs:
+    ldy alt_pairs,x
+    beq further_alt       ; End marker reached -> no change for this key
+    cmp alt_pairs,x  ; Does the current character match the normal key?
+    beq found_alt    ; Yes? Then replace!
+    inx
+    inx                ; Jump to the next pair
+    bne loop_alt_pairs     
+found_alt:
+    lda alt_pairs+1,x ; Load the following shifted character
+    jmp SCAN_NORM2
+
+further_alt:
     cmp #'A'
     bcc out    ; If smaller than 'A', no letter
     cmp #'Z'+1

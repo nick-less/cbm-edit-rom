@@ -30,6 +30,15 @@ shift_pairs:
 !byte $00          ; end of table
 
 
+alt_pairs:
+!byte '7', '{'  ; needs another charset
+!byte '8', '['
+!byte '9', ']'
+!byte '0', '}'  ; 
+!byte 'Q', '@'
+!byte $00          ; end of table
+
+
 I2C_CMD_GET_VER1  = 0x30
 I2C_CMD_GET_VER2  = 0x31
 I2C_CMD_GET_VER3  = 0x32
